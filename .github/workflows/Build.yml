@@ -5,6 +5,8 @@
 name: Build run file
 
 on:
+  schedule:
+    - cron: "0 19 * * *"  # beijing 3:0
   repository_dispatch:
   push:
     branches: [ main]

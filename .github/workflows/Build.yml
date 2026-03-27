@@ -38,7 +38,6 @@ jobs:
       uses: sirpdboy/buildrun@nikki
       with:
         OUTPUT_DIR: "./pkgrun"
-
       
     - name: Build ssrp run files
       uses: sirpdboy/buildrun@ssrp
@@ -71,7 +70,8 @@ jobs:
              | FW4 (nftables) | IPK (OpenWrt) | aarch64 | `xxx-fw4-ipk-aarch64-<version>.run` |
              | FW4 (nftables) | APK (Alpine) | x86_64 | `xxx-fw4-apk-x86_64-<version>.run` |
              | FW4 (nftables) | APK (Alpine) | aarch64 | `xxx-fw4-apk-aarch64-<version>.run` |
-              <img src="https://img.shields.io/github/downloads/sirpdboy/buildrun/${{ env.tag_name }}/total?style=for-the-badge&label=%E4%BB%8A%E6%97%A5%E4%B8%8B%E8%BD%BD%E6%AC%A1%E6%95%B0&labelColor=427e25&color=black"/>
+             
+              <img src="https://img.shields.io/github/downloads/CloudBuildRun/buildrun/${{ env.tag_name }}/total?style=for-the-badge&label=%E4%BB%8A%E6%97%A5%E4%B8%8B%E8%BD%BD%E6%AC%A1%E6%95%B0&labelColor=427e25&color=black"/>
              </p>
           draft: false
           prerelease: false

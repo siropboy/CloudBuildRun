@@ -40,16 +40,12 @@ jobs:
       uses: sirpdboy/buildrun@ssrp
       with:
         OUTPUT_DIR: "./pkgrun"
-      
-    - name: Build passwall run files
-      uses: sirpdboy/buildrun@passwall
-      with:
-        OUTPUT_DIR: "./pkgrun"
         
     - name: Set tag name
       run: |
           TODAY=$(date -u -d '+8 hour' +'%Y-%m-%d')
           echo "tag_name=$TODAY" >> $GITHUB_ENV
+          ls -lh ./pkgrun/
     - name: Upload run files as release assets
       uses: softprops/action-gh-release@v2.1.0
       with:

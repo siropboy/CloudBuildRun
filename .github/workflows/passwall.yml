@@ -1,0 +1,59 @@
+# ======================================
+# https://github.com/sirpdboy/buildrun
+# Lisence: MIT
+# ======================================
+name: Build passwall run file
+
+on:
+  schedule:
+    - cron: "0 19 * * *"  # beijing 3:0
+  repository_dispatch:
+  push:
+    branches: [ main]
+  workflow_dispatch:
+
+jobs:
+  build-openwrt:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+    - uses: actions/checkout@v4
+      
+    - name: Build passwall run files
+      uses: sirpdboy/buildrun@passwall
+      with:
+        OUTPUT_DIR: "./pkgrun"
+        
+    - name: Set tag name
+      run: |
+          TODAY=$(date -u -d '+8 hour' +'%Y-%m-%d')
+          echo "tag_name=$TODAY" >> $GITHUB_ENV
+    - name: Upload run files as release assets
+      uses: softprops/action-gh-release@v2.1.0
+      with:
+          tag_name: ${{ env.tag_name }}
+          name: "Build - ${{ env.tag_name }}"
+          files: ./pkgrun/*.run
+          
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+             <p align="left">
+             
+             ### 生成的 8 种格式 安装包 说明
+             | 防火墙 | 包格式 | 架构 | 文件名 |
+             |--------|--------|------|--------|
+             | FW3 (iptables) | IPK (OpenWrt) | x86_64 | `xxx-fw3-ipk-x86_64-<version>.run` |
+             | FW3 (iptables) | IPK (OpenWrt) | aarch64 | `xxx-fw3-ipk-aarch64-<version>.run` |
+             | FW3 (iptables) | APK (Alpine) | x86_64 | `xxx-fw3-apk-x86_64-<version>.run` |
+             | FW3 (iptables) | APK (Alpine) | aarch64 | `xxx-fw3-apk-aarch64-<version>.run` |
+             | FW4 (nftables) | IPK (OpenWrt) | x86_64 | `xxx-fw4-ipk-x86_64-<version>.run` |
+             | FW4 (nftables) | IPK (OpenWrt) | aarch64 | `xxx-fw4-ipk-aarch64-<version>.run` |
+             | FW4 (nftables) | APK (Alpine) | x86_64 | `xxx-fw4-apk-x86_64-<version>.run` |
+             | FW4 (nftables) | APK (Alpine) | aarch64 | `xxx-fw4-apk-aarch64-<version>.run` |
+             
+              <img src="https://img.shields.io/github/downloads/siropboy/CloudBuildRun/${{ env.tag_name }}/total?style=for-the-badge&label=%E4%BB%8A%E6%97%A5%E4%B8%8B%E8%BD%BD%E6%AC%A1%E6%95%B0&labelColor=427e25&color=black"/>
+             </p>
+          draft: false
+          prerelease: false

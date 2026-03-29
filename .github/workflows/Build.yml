@@ -21,11 +21,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       
-    - name: Build passwall run files
-      uses: sirpdboy/buildrun@passwall
-      with:
-        OUTPUT_DIR: "./pkgrun"
-      
     - name: Build passwall2 run files
       uses: sirpdboy/buildrun@passwall2
       with:
@@ -43,6 +38,11 @@ jobs:
       
     - name: Build ssrp run files
       uses: sirpdboy/buildrun@ssrp
+      with:
+        OUTPUT_DIR: "./pkgrun"
+      
+    - name: Build passwall run files
+      uses: sirpdboy/buildrun@passwall
       with:
         OUTPUT_DIR: "./pkgrun"
         
